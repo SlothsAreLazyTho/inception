@@ -1,0 +1,31 @@
+version: "3.8"
+
+volumes:
+  database:
+    driver: local
+    driver_opts:
+      type: none
+      device: /sgoinfre/cbijman/database
+      o: bind
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      device: /sgoinfre/cbijman/database
+      o: bind
+services:
+  database:
+    build: database
+    ports:
+      - 3306:3306
+  wordpress:
+    depends_on:
+      - database
+    build: wordpress
+  proxy:
+    build: proxy
+    depends_on:
+      - wordpress
+    ports:
+      - 8080:8080
+
