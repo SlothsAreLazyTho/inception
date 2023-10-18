@@ -11,21 +11,24 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /sgoinfre/cbijman/database
+      device: /sgoinfre/cbijman/wordpress
       o: bind
+
 services:
-  database:
-    build: database
+  mariadb:
+    build: mariadb
     ports:
       - 3306:3306
   wordpress:
     depends_on:
-      - database
+      - mariadb
     build: wordpress
+    volumes:
+      - /sgoinfre/cbijman/wordpress:/var/www/html
   proxy:
     build: proxy
-    depends_on:
-      - wordpress
+    volumes:
+      - /sgoinfre/cbijman/wordpress:/var/www/html
     ports:
       - 8080:8080
 

@@ -9,11 +9,11 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
 
+# Copy needed files
+COPY ./tools/configure.sh ./
+
 # Set working directory
 WORKDIR /var/www/html
-
-# Copy needed files
-COPY --chown=wordpress ./tools/configure.sh ./
 
 # Configure users
 RUN useradd -ms /bin/bash wordpress
@@ -22,23 +22,20 @@ RUN chown -R wordpress /var/www/html
 
 # Set users and install wordpress
 USER wordpress
-RUN wp core download --path=/var/www/html
-
-# Configure wordpress
-RUN chmod +x ./configure.sh
-#RUN ./configure.sh
 
 # Change users
 USER root
 
 # Setup PHP
 RUN echo "listen=9000" >> /etc/php/8.2/fpm/pool.d/www.conf
-RUN sed -i "s/user = www-data/user = wordpress/g" /etc/php/8.2/fpm/pool.d/www.conf
-RUN sed -i "s/group = www-data/user = wordpress/g" /etc/php/8.2/fpm/pool.d/www.conf
+#RUN sed -i "s/user = www-data/user = wordpress/g" /etc/php/8.2/fpm/pool.d/www.conf
+#RUN sed -i "s/group = www-data/user = wordpress/g" /etc/php/8.2/fpm/pool.d/www.conf
 
 # Test part
 RUN echo "<html><body>It works!</body></html>" > /var/www/html/index.html
 
 EXPOSE 9000
+
+ENTRYPOINT [ "sh", "/configure.sh" ]
 
 CMD [ "php-fpm8.2", "-F" ]
