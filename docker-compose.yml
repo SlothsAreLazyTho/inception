@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3'
 
 volumes:
   database:
@@ -11,7 +11,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /sgoinfre/cbijman/wordpress
+      device: /home/cbijman/wordpress
       o: bind
 
 services:
