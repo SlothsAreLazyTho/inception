@@ -15,13 +15,13 @@ Y
 EOF
 
 cat << EOF > setup.sql
-CREATE USER 'wordpress' IDENTIFIED BY 'wordpress';
-CREATE DATABASE wordpress;
-GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress' WITH GRANT OPTION;
+CREATE USER $DB_USER IDENTIFIED BY $DB_PASS;
+CREATE DATABASE $DB_NAME;
+GRANT ALL PRIVILEGES ON $DB_NAME.* TO $DB_USER WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 EOF
 
-mysql
+mysql < setup.sql
 
 /etc/init.d/mariadb stop
 
