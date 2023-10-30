@@ -15,24 +15,28 @@ volumes:
       o: bind
 
 services:
-  mariadb:
+  database:
     build: mariadb
     ports:
       - 3306:3306
     env_file:
       - .env
+    volumes:
+      - /goinfre/cbijman/database:/var/lib/mysql
   wordpress:
     depends_on:
-      - mariadb
+      - database
     build: wordpress
     volumes:
-      - /goinfre/wordpress:/var/www/html
+      - /goinfre/cbijman/wordpress:/var/www/html
     env_file:
       - .env
   proxy:
+    depends_on:
+      - wordpress
     build: proxy
     volumes:
-      - /goinfre/wordpress:/var/www/html
+      - /goinfre/cbijman/wordpress:/var/www/html
     ports:
       - 8080:8080
 
