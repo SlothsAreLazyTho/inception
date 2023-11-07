@@ -28,14 +28,11 @@ USER root
 
 # Setup PHP
 RUN echo "listen=9000" >> /etc/php/8.2/fpm/pool.d/www.conf
-#RUN sed -i "s/user = www-data/user = wordpress/g" /etc/php/8.2/fpm/pool.d/www.conf
-#RUN sed -i "s/group = www-data/user = wordpress/g" /etc/php/8.2/fpm/pool.d/www.conf
 
-# Test part
-RUN echo "<html><body>It works!</body></html>" > /var/www/html/index.html
-
+# Expose the ports.
 EXPOSE 9000
 
 ENTRYPOINT [ "sh", "/configure.sh" ]
 
+# Et voila!
 CMD [ "php-fpm8.2", "-F" ]

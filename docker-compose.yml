@@ -1,19 +1,18 @@
 version: '3'
 
-volumes:
-  database:
-    driver: local
-    driver_opts:
-      type: none
-      device: /sgoinfre/cbijman/database
-      o: bind
-  wordpress:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/cbijman/wordpress
-      o: bind
-
+#volumes:
+#  database:
+#    driver: local
+#    driver_opts:
+#      type: none
+#      device: /sgoinfre/cbijman/database
+#      o: bind
+#  wordpress:
+#    driver: local
+#    driver_opts:
+#      type: none
+#      device: /home/cbijman/wordpress
+      #o: bind
 services:
   database:
     build: mariadb
@@ -22,13 +21,13 @@ services:
     env_file:
       - .env
     volumes:
-      - /goinfre/cbijman/database:/var/lib/mysql
+      - /Users/cbijman/goinfre/database:/var/lib/mysql
   wordpress:
     depends_on:
       - database
     build: wordpress
     volumes:
-      - /goinfre/cbijman/wordpress:/var/www/html
+      - /Users/cbijman/goinfre/wordpress:/var/www/html
     env_file:
       - .env
   proxy:
@@ -36,7 +35,7 @@ services:
       - wordpress
     build: proxy
     volumes:
-      - /goinfre/cbijman/wordpress:/var/www/html
+      - /Users/cbijman/goinfre/wordpress:/var/www/html
     ports:
       - 8080:8080
 

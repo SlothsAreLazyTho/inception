@@ -1,28 +1,28 @@
 #!/bin/sh
 
-mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql --rpm > /dev/null
+SQL_FILE_NAME="setup.sql"
+END_KEYWORD=EOF
 
-/etc/init.d/mariadb start
+if [ ! -d "/var/lib/mysql/$DB_NAME" ]; then
+	mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql --rpm > /dev/null
+	service mariadb start
 
-mysql_secure_installation << EOF
+	cat << $END_KEYWORD > $SQL_FILE_NAME
+		CREATE USER "$DB_USER"@'%' IDENTIFIED BY "$DB_PASS";
+		CREATE DATABASE $DB_NAME;
+		GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%' WITH GRANT OPTION;
+		FLUSH PRIVILEGES;
+	$END_KEYWORD
 
-Y
-n
-Y
-Y
-Y
-Y
-EOF
+	mysql < setup.sql
 
-cat << EOF > setup.sql
-CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASS';
-CREATE DATABASE $DB_NAME;
-GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
-EOF
+	echo "Successfully added $DB_USER to the database"
+	service mariadb stop
 
-mysql < setup.sql
-
-/etc/init.d/mariadb stop
+	# Cleaning inception
+	rm -rf $SQL_FILE_NAME;
+else
+	echo "MariaDB was already installed"
+end
 
 exec "$@"

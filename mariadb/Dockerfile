@@ -8,9 +8,6 @@ RUN apt install -y mariadb-server
 RUN mkdir -p /var/run/mysqld /var/lib/mysql
 RUN chown -R mysql:mysql /var/run/mysqld /var/lib/mysql
 
-# Replace variables
-#RUN sed -i 's/bind-address            = 127.0.0.1/bind-address            = 0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
-
 # Configure and run configure.sh
 COPY --chown=root:root ./tools/configure.sh ./
 RUN chmod +x ./configure.sh
