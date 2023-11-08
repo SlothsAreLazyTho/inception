@@ -30,10 +30,10 @@ services:
       - /Users/cbijman/goinfre/wordpress:/var/www/html
     env_file:
       - .env
-  proxy:
+  nginx:
     depends_on:
       - wordpress
-    build: proxy
+    build: nginx
     volumes:
       - /Users/cbijman/goinfre/wordpress:/var/www/html
     ports:
