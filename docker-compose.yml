@@ -18,13 +18,20 @@ services:
     build: mariadb
     ports:
       - 3306:3306
+    healthcheck:
+      test: mysqladmin ping -h database --user=$$DB_USER --password=$$DB_PASS
+      interval: 2s
+      timeout: 10s
+      retries: 10
+    restart: unless-stopped
     env_file:
       - .env
     volumes:
       - /Users/cbijman/goinfre/database:/var/lib/mysql
   wordpress:
     depends_on:
-      - database
+      database:
+        condition: service_healthy
     build: wordpress
     volumes:
       - /Users/cbijman/goinfre/wordpress:/var/www/html

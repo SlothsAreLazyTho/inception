@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         ::::::::             #
+#    Dockerfile                                         :+:    :+:             #
+#                                                      +:+                     #
+#    By: cbijman <cbijman@student.codam.nl>           +#+                      #
+#                                                    +#+                       #
+#    Created: 2023/11/13 16:11:59 by cbijman       #+#    #+#                  #
+#    Updated: 2023/11/13 16:12:01 by cbijman       ########   odam.nl          #
+#                                                                              #
+# **************************************************************************** #
+
 FROM debian:bookworm
 
 # Start installing packages
@@ -20,19 +32,20 @@ RUN useradd -ms /bin/bash wordpress
 RUN mkdir -p /var/www/html
 RUN chown -R wordpress /var/www/html
 
-# Set users and install wordpress
-USER wordpress
-
-# Change users
-USER root
-
 # Setup PHP
 RUN echo "listen=9000" >> /etc/php/8.2/fpm/pool.d/www.conf
 
 # Expose the ports.
 EXPOSE 9000
 
+# Set users and install wordpress
+USER wordpress
+
+# Execute entry point as the minimal user.
 ENTRYPOINT [ "sh", "/configure.sh" ]
+
+# Go back to ROOT because php-fpm doesn't work without root permissions
+USER root
 
 # Et voila!
 CMD [ "php-fpm8.2", "-F" ]
