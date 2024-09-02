@@ -6,17 +6,20 @@
 #    By: cbijman <cbijman@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/11/13 16:11:44 by cbijman       #+#    #+#                  #
-#    Updated: 2023/11/13 16:11:45 by cbijman       ########   odam.nl          #
+#    Updated: 2024/09/02 18:01:36 by cbijman       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
+CXX=docker compose
+CXX_FILE=-f ./srcs/docker-compose.yml
+
 up: down build
-	docker-compose up
+	$(CXX) $(CXX_FILE) $@
 
 down:
-	docker-compose down
+	$(CXX) $(CXX_FILE) $@
 
 build:
-	docker-compose build
+	$(CXX) $(CXX_FILE) $@
 
 .PHONY: up down build
