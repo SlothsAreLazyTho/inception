@@ -1,48 +1,51 @@
 version: '3'
 
-#volumes:
-#  database:
-#    driver: local
-#    driver_opts:
-#      type: none
-#      device: /sgoinfre/cbijman/database
-#      o: bind
-#  wordpress:
-#    driver: local
-#    driver_opts:
-#      type: none
-#      device: /home/cbijman/wordpress
-      #o: bind
+volumes:
+  database:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/inception/database
+      o: bind
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/inception/wordpress
+      o: bind
+
 services:
   database:
-    build: mariadb
+    build: srcs/mariadb
     ports:
       - 3306:3306
     healthcheck:
       test: mysqladmin ping -h database --user=$$DB_USER --password=$$DB_PASS
       interval: 2s
-      timeout: 10s
+      timeout: 5s
       retries: 10
     restart: unless-stopped
     env_file:
       - .env
     volumes:
-      - /Users/cbijman/goinfre/database:/var/lib/mysql
+      - database:/var/lib/mysql
+
   wordpress:
+    build: srcs/wordpress
+    volumes:
+      - wordpress:/var/www/html
+    env_file:
+      - .env
     depends_on:
       database:
         condition: service_healthy
-    build: wordpress
-    volumes:
-      - /Users/cbijman/goinfre/wordpress:/var/www/html
-    env_file:
-      - .env
+
   nginx:
+    build: srcs/nginx
+    volumes:
+      - wordpress:/var/www/html
+    ports:
+      - 80:80
     depends_on:
       - wordpress
-    build: nginx
-    volumes:
-      - /Users/cbijman/goinfre/wordpress:/var/www/html
-    ports:
-      - 8080:8080
 
