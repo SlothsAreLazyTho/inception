@@ -6,7 +6,7 @@
 #    By: cbijman <cbijman@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/11/13 16:12:30 by cbijman       #+#    #+#                  #
-#    Updated: 2023/11/13 16:12:31 by cbijman       ########   odam.nl          #
+#    Updated: 2024/09/03 14:26:15 by cbijman       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,6 @@ if [ ! -d "/var/lib/mysql/$DB_NAME" ]; then
 
     # Cleaning inception
     service mariadb stop
-    rm -rf $SQL_FILE_NAME;
 else
     echo "MariaDB was already installed"
 fi

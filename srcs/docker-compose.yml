@@ -19,7 +19,7 @@ services:
     healthcheck:
       test: mysqladmin ping -h database --user=$$DB_USER --password=$$DB_PASS
       interval: 2s
-      timeout: 5s
+      timeout: 10s
       retries: 10
     restart: unless-stopped
     env_file:

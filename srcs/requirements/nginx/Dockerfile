@@ -6,7 +6,7 @@
 #    By: cbijman <cbijman@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/11/13 16:12:15 by cbijman       #+#    #+#                  #
-#    Updated: 2023/11/13 16:12:17 by cbijman       ########   odam.nl          #
+#    Updated: 2024/09/03 14:01:43 by cbijman       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,6 @@ COPY ./conf/wordpress.conf ./sites-enabled/wordpress.conf
 RUN rm -rf /etc/nginx/sites-enabled/default
 
 # Expose some ports
-EXPOSE 8080
+EXPOSE 80
 
 CMD [ "nginx", "-g", "daemon off;"]

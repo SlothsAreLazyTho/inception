@@ -6,7 +6,7 @@
 #    By: cbijman <cbijman@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/11/13 16:11:44 by cbijman       #+#    #+#                  #
-#    Updated: 2024/09/03 13:34:10 by cbijman       ########   odam.nl          #
+#    Updated: 2024/09/03 14:01:25 by cbijman       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,5 +30,6 @@ $(CXX_DATA):
 
 clean:
 	rm -rf $(CXX_DATA)
+	docker system prune -af
 
 .PHONY: up down build clean
