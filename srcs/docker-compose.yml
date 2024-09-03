@@ -12,7 +12,8 @@
 
 services:
   database:
-    build: mariadb
+    build: ./requirements/mariadb
+    image: mariadb
     ports:
       - 3306:3306
     healthcheck:
@@ -25,9 +26,12 @@ services:
       - .env
     volumes:
       - database:/var/lib/mysql
+    networks:
+      - network
 
   wordpress:
-    build: wordpress
+    build: ./requirements/wordpress
+    image: wordpress
     volumes:
       - wordpress:/var/www/html
     env_file:
@@ -35,15 +39,20 @@ services:
     depends_on:
       database:
         condition: service_healthy
+    networks:
+      - network
 
   nginx:
-    build: nginx
+    build: ./requirements/nginx
+    image: nginx
     volumes:
       - wordpress:/var/www/html
     ports:
       - 80:80
     depends_on:
       - wordpress
+    networks:
+      - network
 
 volumes:
   database:
