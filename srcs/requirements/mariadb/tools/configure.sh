@@ -13,16 +13,17 @@
 #!/bin/sh
 
 if [ ! -d "/var/lib/mysql/$DB_NAME" ]; then
-    mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql --rpm > /dev/null
+    mysql_install_db --datadir=/var/lib/mysql --user=mysql
     
     service mariadb start
 
-    echo "CREATE USER \"$DB_USER\"@'%' IDENTIFIED BY \"$DB_PASS\";" | mysql
-    echo "GRANT ALL PRIVILEGES ON $DB_NAME.* TO \"$DB_USER\"@'%' WITH GRANT OPTION;" | mysql
-    echo "CREATE DATABASE $DB_NAME;" | mysql
-    echo "FLUSH PRIVILEGES;" | mysql
+    sleep 5
 
-    # Cleaning inception
+    mysql -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASS';"
+    mysql -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%' WITH GRANT OPTION;"
+    mysql -e "CREATE DATABASE $DB_NAME;"
+    mysql -e "FLUSH PRIVILEGES;"
+
     service mariadb stop
 
     echo "Successfully added $DB_USER to the database"
