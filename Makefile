@@ -20,7 +20,7 @@ up:
 	$(CXX) $(CXX_FILE) $@
 
 down:
-	$(CXX) $(CXX_FILE) $@ -v
+	$(CXX) $(CXX_FILE) $@
 
 build: $(CXX_DATA)
 	$(CXX) $(CXX_FILE) $@
@@ -32,5 +32,7 @@ clean:
 	rm -rf $(CXX_DATA)
 	$(CXX) $(CXX_FILE) down -v
 #	docker system prune -af
+
+re: clean all
 
 .PHONY: up down build clean
