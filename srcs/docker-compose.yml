@@ -26,7 +26,7 @@ services:
     env_file:
       - .env
     volumes:
-      - database:/var/lib/mysql
+      - mariadb:/var/lib/mysql
     networks:
       - inception
 
@@ -35,7 +35,7 @@ services:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
     depends_on:
-      database:
+      mariadb:
         condition: service_healthy
     volumes:
       - wordpress:/var/www/html
@@ -49,7 +49,7 @@ services:
       context: ./requirements/nginx
       dockerfile: Dockerfile
     depends_on:
-      database:
+      mariadb:
         condition: service_healthy
     ports:
       - 443:443
@@ -59,7 +59,7 @@ services:
       - inception
 
 volumes:
-  database:
+  mariadb:
     driver: local
     driver_opts:
       o: 'bind'
