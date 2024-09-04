@@ -12,7 +12,7 @@
 
 CXX=docker compose
 CXX_FILE=-f ./srcs/docker-compose.yml
-CXX_DATA=C:/Users/chino/Desktop/data/wordpress
+CXX_DATA=/home/cbijman/data
 
 all: down build up
 

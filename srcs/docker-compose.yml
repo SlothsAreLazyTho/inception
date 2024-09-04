@@ -63,13 +63,13 @@ volumes:
     driver_opts:
       o: 'bind'
       type: 'none'
-      device: 'C:/Users/chino/Desktop/data/database'
+      device: '/home/cbijman/data/database'
   wordpress:
     driver: local
     driver_opts:
       o: 'bind'
       type: 'none'
-      device: 'C:/Users/chino/Desktop/data/wordpress'
+      device: '/home/cbijman/data/wordpress'
   
 networks:
  inception:
