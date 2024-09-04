@@ -16,7 +16,7 @@
 if [ ! -f "/var/www/html/wp-config.php" ]; then
 	echo "Installing wordpress from the $(whoami) user!"
 
-	 until mysql -h $DB_HOST -u $DB_USER -p $DB_PASS -e "status" >/dev/null 2>&1; do
+	 until mysql -h"$DB_HOST" -u"$DB_USER" -p"$DB_PASS" -e "status" >/dev/null 2>&1; do
         echo "Waiting for MySQL to be ready..."
         sleep 5
     done
