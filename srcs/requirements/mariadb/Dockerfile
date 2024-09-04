@@ -20,6 +20,9 @@ RUN apt install -y mariadb-server
 RUN mkdir -p /var/run/mysqld /var/lib/mysql
 RUN chown -R mysql:mysql /var/run/mysqld /var/lib/mysql
 
+# Copy mysql configuration to the container
+COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+
 # Configure and run configure.sh
 COPY --chown=root:root ./tools/configure.sh ./
 RUN chmod +x ./configure.sh

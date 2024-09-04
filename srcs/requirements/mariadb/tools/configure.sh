@@ -13,7 +13,7 @@
 #!/bin/sh
 
 if [ ! -d "/var/lib/mysql/$DB_NAME" ]; then
-    mysql_install_db --datadir=/var/lib/mysql --user=mysql
+    mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql
     
     service mariadb start
 
