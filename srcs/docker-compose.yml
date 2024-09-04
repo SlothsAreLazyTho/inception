@@ -17,11 +17,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3306:3306
-    healthcheck:
-      test: mysqladmin ping -h $$DB_HOST --user=$$DB_USER --password=$$DB_PASS
-      interval: 2s
-      timeout: 10s
-      retries: 10
     restart: unless-stopped
     env_file:
       - .env
@@ -31,6 +26,8 @@ services:
       - inception
 
   wordpress:
+    depends_on:
+      - database
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
@@ -38,8 +35,6 @@ services:
       - wordpress:/var/www/html
     env_file:
       - .env
-    depends_on:
-      - database
     networks:
       - inception
 
