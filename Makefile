@@ -31,8 +31,10 @@ $(CXX_DATA):
 clean:
 	rm -rf $(CXX_DATA)
 	$(CXX) $(CXX_FILE) down -v
-#	docker system prune -af
+
+fclean: clean
+	docker system prune -af
 
 re: clean all
 
-.PHONY: up down build clean
+.PHONY: up down build clean fclean re

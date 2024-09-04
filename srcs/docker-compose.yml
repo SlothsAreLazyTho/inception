@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 services:
-  database:
+  mariadb:
     build:
       context: ./requirements/mariadb
       dockerfile: Dockerfile

@@ -20,19 +20,16 @@ RUN apt-get install -y nginx openssl
 WORKDIR /etc/nginx
 COPY ./conf/wordpress.conf ./sites-enabled/wordpress.conf
 
+# Generate SSL keys
 RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
-				-out /etc/nginx/ssl/cbijman.42.fr.crt \
-				-keyout /etc/nginx/ssl/cbijman.42.fr.key \
+				-out /etc/ssl/certs/cbijman.42.fr.crt \
+				-keyout /etc/ssl/certs/cbijman.42.fr.key \
 				-subj "/C=NL/ST=North-Holland/L=Amsterdam/O=Codam/OU=cbijman/CN=cbijman/"
 
-## Copy SSL Keys
-#COPY ./conf/cbijman.42.fr.crt ./ssl/cbijman.42.fr.crt
-#COPY ./conf/cbijman.42.fr.key ./ssl/cbijman.42.fr.key
-
-# Temporary once volumes are fixed
+# Remove default template from nginx
 RUN rm -rf /etc/nginx/sites-enabled/default
 
 # Expose some ports
-EXPOSE 80
+EXPOSE 443
 
 CMD [ "nginx", "-g", "daemon off;"]
