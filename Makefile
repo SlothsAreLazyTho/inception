@@ -14,9 +14,9 @@ CXX=docker compose
 CXX_FILE=-f ./srcs/docker-compose.yml
 CXX_DATA=/home/cbijman/data
 
-all: down build up
+all: up
 
-up:
+up: build
 	$(CXX) $(CXX_FILE) $@
 
 down:
@@ -28,7 +28,7 @@ build: $(CXX_DATA)
 $(CXX_DATA):
 	mkdir -p $(CXX_DATA)/wordpress $(CXX_DATA)/database
 
-clean:
+clean: down
 	rm -rf $(CXX_DATA)
 	$(CXX) $(CXX_FILE) down -v
 
