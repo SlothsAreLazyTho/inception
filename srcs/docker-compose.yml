@@ -52,7 +52,7 @@ services:
       database:
         condition: service_healthy
     ports:
-      - 80:80
+      - 443:443
     volumes:
       - wordpress:/var/www/html
     networks:

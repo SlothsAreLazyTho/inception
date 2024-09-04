@@ -24,6 +24,6 @@ COPY ./conf/wordpress.conf ./sites-enabled/wordpress.conf
 RUN rm -rf /etc/nginx/sites-enabled/default
 
 # Expose some ports
-EXPOSE 80
+EXPOSE 443
 
 CMD [ "nginx", "-g", "daemon off;"]
