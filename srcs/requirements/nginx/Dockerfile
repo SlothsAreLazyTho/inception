@@ -20,10 +20,14 @@ RUN apt-get install -y nginx
 WORKDIR /etc/nginx
 COPY ./conf/wordpress.conf ./sites-enabled/wordpress.conf
 
+# Copy SSL Keys
+COPY ./conf/cert.pem ./ssl/cert.pem
+COPY ./conf/key.pem ./ssl/key.pem
+
 # Temporary once volumes are fixed
 RUN rm -rf /etc/nginx/sites-enabled/default
 
 # Expose some ports
-EXPOSE 443
+EXPOSE 80
 
 CMD [ "nginx", "-g", "daemon off;"]
