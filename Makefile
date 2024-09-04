@@ -12,7 +12,7 @@
 
 CXX=docker compose
 CXX_FILE=-f ./srcs/docker-compose.yml
-CXX_DATA=./srcs/data
+CXX_DATA=C:/Users/chino/Desktop/data/wordpress
 
 all: down build up
 
@@ -20,7 +20,7 @@ up:
 	$(CXX) $(CXX_FILE) $@
 
 down:
-	$(CXX) $(CXX_FILE) $@
+	$(CXX) $(CXX_FILE) $@ -v
 
 build: $(CXX_DATA)
 	$(CXX) $(CXX_FILE) $@
