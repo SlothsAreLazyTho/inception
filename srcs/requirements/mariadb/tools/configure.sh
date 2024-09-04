@@ -15,17 +15,18 @@
 if [ ! -d "/var/lib/mysql/$DB_NAME" ]; then
     mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql
     
-    service mariadb start
-
+    echo "Starting MySQL in safe mode without network"
+    mysqld_safe --skip-networking &
     sleep 5
 
+    # Insert query to the database
     mysql -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASS';"
     mysql -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%' WITH GRANT OPTION;"
     mysql -e "CREATE DATABASE $DB_NAME;"
     mysql -e "FLUSH PRIVILEGES;"
-
-    service mariadb stop
-
+    
+    #Done so turn off the server and lets enable the container with networking now!
+    mysqladmin --user=root shutdown
     echo "Successfully added $DB_USER to the database"
 else
     echo "MariaDB was already installed"
