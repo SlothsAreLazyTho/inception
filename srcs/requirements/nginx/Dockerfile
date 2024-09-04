@@ -21,8 +21,8 @@ WORKDIR /etc/nginx
 COPY ./conf/wordpress.conf ./sites-enabled/wordpress.conf
 
 # Copy SSL Keys
-COPY ./conf/cert.pem ./ssl/cert.pem
-COPY ./conf/key.pem ./ssl/key.pem
+COPY ./conf/cbijman.42.fr.crt ./ssl/cbijman.42.fr.crt
+COPY ./conf/cbijman.42.fr.key ./ssl/cbijman.42.fr.key
 
 # Temporary once volumes are fixed
 RUN rm -rf /etc/nginx/sites-enabled/default
